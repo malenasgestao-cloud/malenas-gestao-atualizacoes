@@ -20,8 +20,12 @@ e peça confirmação antes de qualquer coisa difícil de desfazer.
    Microsoft Defender ligado, data, hora e fuso (Brasília) certos.
 2. **Energia:** com o computador na tomada, ele nunca pode suspender nem hibernar (os celulares perdem o acesso):
    `powercfg /change standby-timeout-ac 0` e `powercfg /change hibernate-timeout-ac 0`. A tela pode apagar.
+   Explique que muitos computadores ligam sozinhos quando a luz volta, por uma opção da BIOS ("Restore on AC Power
+   Loss" ou "After Power Loss" → Power On, tecla Del ou F2 ao ligar). Quem ajusta é a pessoa, na tela da BIOS.
 3. **Rede:** a rede da loja deve estar como **Privada** (`Get-NetConnectionProfile`), senão o Windows bloqueia o
-   acesso dos celulares pelo Wi-Fi. Pergunte antes de mudar.
+   acesso dos celulares pelo Wi-Fi. Pergunte antes de mudar. Se alguém tiver a senha do roteador, sugira reservar o
+   IP deste computador: o acesso pelo Wi-Fi usa o número (ex.: 192.168.0.15) e, se ele mudar, os celulares leem o
+   QR code de novo. Sem a senha, pule.
 4. **Instalar:** baixe o `Malenas-Gestao-Setup-<versão>.exe` da versão mais recente em
    https://github.com/malenasgestao-cloud/malenas-gestao-atualizacoes/releases/latest e rode com `/S`.
    Confira que a porta 3210 responde e que existe
@@ -32,15 +36,24 @@ e peça confirmação antes de qualquer coisa difícil de desfazer.
 6. **OneDrive (backup):** a pessoa entra no OneDrive com a conta da loja (ícone de nuvem perto do relógio).
    Depois de fechar e abrir o sistema, confira que apareceu a pasta `OneDrive\Backup Malenas` com uma cópia `pdv-*.db`.
 7. **Tailscale (dona acessar de qualquer lugar):** instale (https://tailscale.com/download/windows), rode
-   `tailscale login` e passe o link para a pessoa aprovar com a conta da loja.
-8. **Primeiro acesso (com a dona):** ela cria a conta, ativa o código de segurança no celular e anota os códigos de
+   `tailscale login` e passe o link para a pessoa aprovar com a conta da loja. Depois rode
+   `tailscale set --unattended`, para ele conectar mesmo antes de alguém entrar no Windows.
+8. **Voltar sozinho depois de desligar (pergunte antes):** o sistema só abre depois que alguém entra no Windows.
+   Depois de uma queda de luz ou de uma atualização do Windows, o computador fica parado na tela do PIN e os celulares
+   ficam sem acesso até alguém digitar. Explique e pergunte se o Windows deve entrar sozinho ao ligar. O Malenas
+   Gestão continua pedindo usuário e senha; só o Windows passa a entrar direto. Se a pessoa quiser, use o Autologon
+   da Microsoft (https://learn.microsoft.com/sysinternals/downloads/autologon). Ela digita a senha do Windows na
+   janela dele, nunca no chat. Com conta Microsoft que só entra com PIN, desligue antes, em Configurações → Contas →
+   Opções de entrada, a opção "permitir apenas a entrada do Windows Hello".
+9. **Primeiro acesso (com a dona):** ela cria a conta, ativa o código de segurança no celular e anota os códigos de
    recuperação. Depois segue a lista **Primeiros passos** da tela inicial: dados da loja (já vêm preenchidos, só
    conferir e salvar), teste da impressora, produtos ("Importar do site"), estoque, backup, abrir com o Windows,
    funcionárias (a ficha de acesso imprime na Bematech) e celular (Wi-Fi e Tailscale, em Configurações → Aplicativo
    e celular). Se o Windows perguntar do firewall, **Permitir**.
-9. **Conferência final:** o sistema abre sozinho ao ligar o computador; impressora pronta; backup de hoje no
-   OneDrive; um celular no Wi-Fi da loja abre o sistema; a dona entra pelo celular via Tailscale.
-10. **Ao terminar:** a pessoa sai da conta do Claude neste computador (ou desinstala o Claude Code). O computador
+10. **Conferência final:** impressora pronta; backup de hoje no OneDrive; um celular no Wi-Fi da loja abre o
+    sistema; a dona entra pelo celular via Tailscale. Por último, reinicie o computador e, sem tocar em nada (ou só
+    digitando o PIN, se não quiseram o passo 8), confira que o sistema abre sozinho e o celular volta a entrar.
+11. **Ao terminar:** a pessoa sai da conta do Claude neste computador (ou desinstala o Claude Code). O computador
     fica na loja com dados de clientes.
 
 ## Se a loja já usava outro computador
